@@ -1,3 +1,4 @@
+const prompt=require('prompt-sync')();
 const NAME_REGEX_PATTERN = RegExp('^[A-Z]{1}[a-z]{2,}$');
 const ADDRESS_REGEX_PATTERN = RegExp('^[a-zA-z]{3,}$');
 const PINCODE_REGEX_PATTERN = RegExp('^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$');
@@ -73,9 +74,27 @@ class Contact{
         " State: "+this.state+" Zip: "+this.zip+" Phone Number: "+this.phoneNumber+" Email: "+this.email;
     }
 }
-try{
-    let person = new Contact("Mohd","Arshad","KarolBagh","NewDelhi","Delhi",110005,9009009010,"arshad@gmail.com");
-    console.log(person.toString());
-}catch(e){
-    console.log(e);
+
+//array to store contacts
+let addressBookArray = new Array();
+let countEntry = 0;
+do{
+    countEntry = prompt("Enter 1) Add Contact 0) Exit: ");
+    if(countEntry == 1){
+    let FirstName = prompt("Enter Firstname: ");
+    let LastName = prompt("Enter Lastname: ");
+    let Address = prompt("Enter Address: ");
+    let City = prompt("Enter City name: ");
+    let State = prompt("Enter State name: ");
+    let Zip = prompt("Enter pincode: ");
+    let PhoneNumber = prompt("Enter phone number: ");
+    let EmailId = prompt("Enter email id: ");
+    try{
+        let person = new Contact(FirstName,LastName,Address,City,State,Zip,PhoneNumber,EmailId);
+        addressBookArray.push(person);
+        console.log("Contact is added: ");
+    }catch(e){
+        console.log(e);
+    }
 }
+}while(countEntry != 0);
