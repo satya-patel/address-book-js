@@ -1,4 +1,5 @@
 console.log("Welcome To Addressbook System JavaScript Program");
+console.log("Welcome To Addressbook System JavaScript Program\n");
 const prompt=require('prompt-sync')();
 const NAME_REGEX_PATTERN = RegExp('^[A-Z]{1}[a-z]{2,}$');
 const ADDRESS_REGEX_PATTERN = RegExp('^[a-zA-z]{3,}$');
@@ -97,7 +98,6 @@ function addContacts(){
         console.log(e);
     }
 }
-
 function findContact(userData){
     let contactToEdit;
     for(let i = 0; i < addressBookArray.length; i++){
@@ -157,32 +157,29 @@ let deletContact=()=>{
         console.log("Contact is deleleted in Addressbook.")
     }
 }
+//searching contact in city or state
+function searchByCityState(place, choice){
+    let contacts = new Array();
+    if(choice == 1){
+        contacts = addressBookArray.filter(contact => contact.city === place)
+    }
+    if(choice == 2){
+        contacts = addressBookArray.filter(contact => contact.state === place)
+    }
+    console.log("Contact found: ",contacts);
+}
+
 //array to store contacts
 let addressBookArray = new Array();
 let countEntry = 0;
 do{
     countEntry = prompt("Press 1) Add Contact 2) Edit Contact 3) View Contact 4) Delete Contact 5) Number of Contacts 0) Exit: ");
+    countEntry = prompt("Press 1) Add Contact 2) Edit Contact 3) View Contact 4) Delete Contact \n\t5) Number of Contacts 6) search contact by city or state 0)Exit: ");
     if(countEntry == 1){
-        let FirstName = prompt("Enter Firstname: ");
-        let LastName = prompt("Enter Lastname: ");
-        let Address = prompt("Enter Address: ");
-        let City = prompt("Enter City name: ");
-        let State = prompt("Enter State name: ");
-        let Zip = prompt("Enter pincode: ");
-        let PhoneNumber = prompt("Enter phone number: ");
-        let EmailId = prompt("Enter email id: ");
-        try{
-            let person = new Contact(FirstName,LastName,Address,City,State,Zip,PhoneNumber,EmailId);
-            addressBookArray.push(person);
-            console.log("Contact is added. ");
-        }catch(e){
-            console.log(e);
-        }
         addContacts();
     }
     if(countEntry == 2){
         if(addressBookArray.length==0){
-            console.log("No contacts");
             console.log("No contacts in Addressbook.");
         }
         let userData = prompt("Enter the contact firstname which you want to edit: ");
@@ -197,4 +194,16 @@ do{
     if(countEntry == 5){
         console.log("Number of Contacts: "+addressBookArray.reduce(contacts=>contacts+1,0));
     }
-}while(countEntry != 0);
+    if(countEntry == 6){
+        console.log("1.) Search By City     2.) Search By State");
+        let choice = Number(prompt("Enter your choice: "));
+        switch (choice){
+            case 1: let city = prompt("Enter the city name: ");
+                    searchByCityState(city, 1);
+                    break;
+            case 2: let state = prompt("Enter the state name: ");
+                    searchByCityState(state, 2);
+                    break;
+        }
+    }
+}while(countEntry != 0); 
