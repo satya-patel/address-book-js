@@ -1,4 +1,3 @@
-console.log("Welcome To Addressbook System JavaScript Program");
 console.log("Welcome To Addressbook System JavaScript Program\n");
 const prompt=require('prompt-sync')();
 const NAME_REGEX_PATTERN = RegExp('^[A-Z]{1}[a-z]{2,}$');
@@ -6,6 +5,7 @@ const ADDRESS_REGEX_PATTERN = RegExp('^[a-zA-z]{3,}$');
 const PINCODE_REGEX_PATTERN = RegExp('^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$');
 const PHONE_NUMBER_PATTERN = RegExp('^(0/91)?[6-9][0-9]{9}$'); 
 const EMAIL_REGEX_PATTERN=RegExp('^[a-zA-Z0-9]+([._+-][0-9a-zA-Z]+)*@[a-zA-Z0-9]+.[a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?$');
+
 class Contact{ 
     //property
     firstName;
@@ -16,6 +16,7 @@ class Contact{
     zip;
     phoneNumber;
     email;
+
     //constructor
     constructor(firstName,lastName,address,city,state,zip,phoneNumber,email){
         if(!NAME_REGEX_PATTERN.test(firstName)) { 
@@ -98,6 +99,7 @@ function addContacts(){
         console.log(e);
     }
 }
+
 function findContact(userData){
     let contactToEdit;
     for(let i = 0; i < addressBookArray.length; i++){
@@ -144,6 +146,7 @@ function findContact(userData){
             }
     }
 }
+
 let deletContact=()=>{
     if(addressBookArray.length==0){
         console.log("No contact in the list");
@@ -166,15 +169,17 @@ function searchByCityState(place, choice){
     if(choice == 2){
         contacts = addressBookArray.filter(contact => contact.state === place)
     }
-    console.log("Contact found: ",contacts);
+    console.log("Contact: ",contacts);
 }
 
 //array to store contacts
-let addressBookArray = new Array();
+const addressBookArray = new Array();
 let countEntry = 0;
 do{
-    countEntry = prompt("Press 1) Add Contact 2) Edit Contact 3) View Contact 4) Delete Contact 5) Number of Contacts 0) Exit: ");
-    countEntry = prompt("Press 1) Add Contact 2) Edit Contact 3) View Contact 4) Delete Contact \n\t5) Number of Contacts 6) search contact by city or state 0)Exit: ");
+    console.log("\nPress: 1) Add Contact 2) Edit Contact 3) View Contact ");
+    console.log("\t4) Delete Contact 5) Number of Contacts 6) Search contact by city or state ");
+    console.log("\t7) View contact by city or state 0)Exit: ");
+    countEntry = Number(prompt("Enter your choice: "));
     if(countEntry == 1){
         addContacts();
     }
@@ -186,7 +191,7 @@ do{
         findContact(userData); 
     }
     if(countEntry == 3){
-        console.log(addressBookArray.toString()+"\n");
+        console.log(addressBookArray+"\n");
     }
     if(countEntry == 4){
         deletContact();
@@ -206,4 +211,16 @@ do{
                     break;
         }
     }
-}while(countEntry != 0); 
+    if(countEntry == 7){
+        console.log("1.) View By City     2.) View By State");
+        let choose = Number(prompt("Enter your choice: "));
+        switch (choose){
+            case 1: let city = prompt("Enter the city name: ");
+                    searchByCityState(city, 1);
+                    break;
+            case 2: let state = prompt("Enter the state name: ");
+                    searchByCityState(state, 2);
+                    break;
+        }
+    }
+}while(countEntry != 0);
