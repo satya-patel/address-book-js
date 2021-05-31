@@ -5,7 +5,6 @@ const ADDRESS_REGEX_PATTERN = RegExp('^[a-zA-z]{3,}$');
 const PINCODE_REGEX_PATTERN = RegExp('^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$');
 const PHONE_NUMBER_PATTERN = RegExp('^(0/91)?[6-9][0-9]{9}$'); 
 const EMAIL_REGEX_PATTERN=RegExp('^[a-zA-Z0-9]+([._+-][0-9a-zA-Z]+)*@[a-zA-Z0-9]+.[a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?$');
-
 class Contact{ 
     //property
     firstName;
@@ -16,7 +15,6 @@ class Contact{
     zip;
     phoneNumber;
     email;
-
     //constructor
     constructor(firstName,lastName,address,city,state,zip,phoneNumber,email){
         if(!NAME_REGEX_PATTERN.test(firstName)) { 
@@ -78,6 +76,27 @@ class Contact{
         " State: "+this.state+" Zip: "+this.zip+" Phone Number: "+this.phoneNumber+" Email: "+this.email;
     }
 }
+function addContacts(){
+    let FirstName = prompt("Enter Firstname: ");
+    let LastName = prompt("Enter Lastname: ");
+    if(addressBookArray.find((contact)=>(contact.firstName+contact.lastName)==(FirstName+LastName))){   
+        console.log("Name is already present in addressbook.");
+        return;
+    }
+    let Address = prompt("Enter Address: ");
+    let City = prompt("Enter City name: ");
+    let State = prompt("Enter State name: ");
+    let Zip = prompt("Enter pincode: ");
+    let PhoneNumber = prompt("Enter phone number: ");
+    let EmailId = prompt("Enter email id: ");
+    try{
+        let person = new Contact(FirstName,LastName,Address,City,State,Zip,PhoneNumber,EmailId);
+        addressBookArray.push(person);
+        console.log("Contact is added. ");
+    }catch(e){
+        console.log(e);
+    }
+}
 
 function findContact(userData){
     let contactToEdit;
@@ -125,7 +144,6 @@ function findContact(userData){
             }
     }
 }
-
 let deletContact=()=>{
     if(addressBookArray.length==0){
         console.log("No contact in the list");
@@ -139,7 +157,6 @@ let deletContact=()=>{
         console.log("Contact is deleleted in Addressbook.")
     }
 }
-
 //array to store contacts
 let addressBookArray = new Array();
 let countEntry = 0;
@@ -161,10 +178,12 @@ do{
         }catch(e){
             console.log(e);
         }
+        addContacts();
     }
     if(countEntry == 2){
         if(addressBookArray.length==0){
             console.log("No contacts");
+            console.log("No contacts in Addressbook.");
         }
         let userData = prompt("Enter the contact firstname which you want to edit: ");
         findContact(userData); 
